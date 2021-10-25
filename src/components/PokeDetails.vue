@@ -69,9 +69,11 @@
 <script>
 import Endpoints from "../endpoints";
 import axios from 'axios';
-import App from '../Views/Home.vue';
 import PokeTypeListBig from "./PokeTypeListBig.vue";
 import StatGraphBar from "./StatGraphBar.vue";
+import commonScripts from '../commonScripts';
+
+let cs = new commonScripts();
 let endpoints = new Endpoints();
 let pokeCategory = null;
 let pokeHabilities = [];
@@ -93,7 +95,6 @@ export default {
     }
   },
   data() {
-    console.log(this.pokemon);
     let lowerStringPokeName = this.pokemon.name.toLowerCase();
     let capitalizedPokeName = lowerStringPokeName[0].toUpperCase() + lowerStringPokeName.substring(1);
     
@@ -124,11 +125,11 @@ export default {
     }
   },
   mounted: async function() {
-    App.methods.toggleSpinner();
+    cs.toggleSpinner();
     await this.getDetailedPokeSpecies();
     this.getPokeCategory();
-    //this.improveAbilityReadability();
-    //this.getPokemonWeaknesses();
+    this.improveAbilityReadability();
+    this.getPokemonWeaknesses();
   },
   methods: {
     getDetailedPokeSpecies: async function() {
@@ -136,9 +137,6 @@ export default {
       await axios.get(endpoints.getPokeDetailsBySpecies(this.pokemon.species.name)).then(function(response) {
         vm.detailedPokeSpecies = response.data;
       });
-    },
-    getPokeEvolution: async function() {
-      console.log("a");
     },
     improveAbilityReadability: function() {
       for(const ability of this.pokemon.abilities) {
@@ -183,10 +181,9 @@ export default {
     width: 100%;
     max-width: 1024px;
     height: fit-content;
-    position: fixed;
     top: 55px;
     background-color: #D4D4D4;
-
+    z-index: 9999;
     /* padding: 15px;? */
   }
   .upper {
@@ -323,6 +320,10 @@ export default {
     color: #fff;
     background-color: #424242;
     height: fit-content;
-    min-height: 360px;
+    min-height: 350px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    text-align: left;
+    padding: 5px 15px;
   }
 </style>
