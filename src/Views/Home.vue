@@ -49,10 +49,17 @@
     width: 100%;
     height: 100%;
     text-align: center;
-    background: white;
+    background: #D4D4D4;
     top: 0;
     left: 0;
     z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .spinner img {
+    width: 200px;
   }
 
   h1 {
